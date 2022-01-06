@@ -21,28 +21,28 @@ public class Planet{
         this(p.xxPos, p.yyPos, p.xxVel, p.yyVel, p.mass, p.imgFileName);        
     }
 
-    private double calcDistance(Planet p) {
+    public double calcDistance(Planet p) {
         double distance;
         distance = Math.sqrt(Math.pow(this.xxPos - p.xxPos, 2) + Math.pow(this.yyPos - p.yyPos, 2));
         
         return distance;
     }
 
-    private double calcForceExertedBy(Planet p) {
+    public double calcForceExertedBy(Planet p) {
         double distance = this.calcDistance(p);
         double force = (G_coff * this.mass * p.mass)/ Math.pow(distance, 2);
         
         return force;
     }
 
-    private double calcForceExertedByX(Planet p) {
+    public double calcForceExertedByX(Planet p) {
         double distance = this.calcDistance(p);
         double x_force = this.calcForceExertedBy(p) * (p.xxPos - this.xxPos) / distance;
 
         return x_force;
     }
 
-    private double calcForceExertedByY(Planet p) {
+    public double calcForceExertedByY(Planet p) {
         double distance = this.calcDistance(p);
         double y_force = this.calcForceExertedBy(p) * (p.yyPos - this.yyPos) / distance;
 
