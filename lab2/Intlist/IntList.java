@@ -80,18 +80,38 @@ public class IntList {
      * *  elements of B.  May modify items of A. Don't use 'new'.
      */
 
+    /** Can be done in a recursive way, need to paas a pointer to the function. */
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        IntList ptr = A;
+        while (ptr.rest != null) {
+            ptr = ptr.rest;
+        }
+        ptr.rest = B;
+        return A;
+        // recursive one:
+        // return dcatenate(IntList A, IntList B, IntList A);
     }
-
+    public static IntList dcatenate(IntList A, IntList B, IntList ptr) {
+        if (ptr.rest == null) {
+            ptr.rest = B;
+            return A;
+        }
+        return dcatenate(A, B, ptr.rest);
+    }
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        return new IntList(A.first, catenate(A.rest, B));
     }
 
 
