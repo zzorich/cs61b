@@ -4,11 +4,11 @@ public class LinkedListDeque<T> {
     private int size;
 
     private class TNode {
-        public T item;
-        public TNode prev;
-        public TNode next;
+        private T item;
+        private TNode prev;
+        private TNode next;
 
-        public TNode(T item, TNode prev, TNode next) {
+        TNode(T item, TNode prev, TNode next) {
             this.item = item;
             this.prev = prev;
             this.next = next;
@@ -30,9 +30,9 @@ public class LinkedListDeque<T> {
      * @param item of preconfigured type to be passed in.
      */
     public void addFirst(T item) {
-        TNode FirstNode = new TNode(item, sentinel, sentinel.next);
-        sentinel.next.prev = FirstNode;
-        sentinel.next = FirstNode;
+        TNode firstNode = new TNode(item, sentinel, sentinel.next);
+        sentinel.next.prev = firstNode;
+        sentinel.next = firstNode;
         size += 1;
     }
 
@@ -41,9 +41,9 @@ public class LinkedListDeque<T> {
      * @param item, the value to be passed in.
      */
     public void addLast(T item) {
-        TNode LastNode = new TNode(item, sentinel.prev, sentinel);
-        sentinel.prev.next = LastNode;
-        sentinel.prev = LastNode;
+        TNode lastNode = new TNode(item, sentinel.prev, sentinel);
+        sentinel.prev.next = lastNode;
+        sentinel.prev = lastNode;
         size += 1;
     }
 
@@ -65,7 +65,7 @@ public class LinkedListDeque<T> {
     public void printDeque() {
         TNode ptr = sentinel.next;
         while (ptr != sentinel) {
-            System.out.print( ptr.item +" ");
+            System.out.print(ptr.item + " ");
             ptr = ptr.next;
         }
     }
@@ -76,7 +76,7 @@ public class LinkedListDeque<T> {
             item = sentinel.prev.item;
             sentinel.prev.prev.next = sentinel;
             sentinel.prev = sentinel.prev.prev;
-            size -=1;
+            size -= 1;
         }
         return item;
     }
@@ -94,7 +94,7 @@ public class LinkedListDeque<T> {
 
     public T get(int index) {
         TNode ptr = sentinel.next;
-        if (index < size) {
+        if (index < size - 1) {
             while (index > 0) {
                 ptr = ptr.next;
             }
@@ -104,7 +104,7 @@ public class LinkedListDeque<T> {
 
     private T getRecursive(int index, TNode ptr) {
         if (index > 0) {
-            return getRecursive(index-1, ptr.next);
+            return getRecursive(index - 1, ptr.next);
         }
         return ptr.item;
     }
@@ -115,13 +115,4 @@ public class LinkedListDeque<T> {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
 }
