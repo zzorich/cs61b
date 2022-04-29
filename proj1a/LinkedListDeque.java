@@ -98,8 +98,10 @@ public class LinkedListDeque<T> {
             while (index > 0) {
                 ptr = ptr.next;
             }
+            return ptr.item;
+        }else{
+            return null;
         }
-        return ptr.item;
     }
 
     private T getRecursive(int index, TNode ptr) {

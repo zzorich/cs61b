@@ -15,12 +15,14 @@ public class ArrayDeque<T> {
         this.item[nextFirst] = first;
         nextFirst -= 1;
         size += 1;
+        this.resize();
     }
 
     public void addLast(T first) {
         this.item[nextLast] = first;
         nextLast += 1;
         size += 1;
+        this.resize();
     }
 
     public boolean isEmpty() {
@@ -37,7 +39,7 @@ public class ArrayDeque<T> {
         }
         return null;
     }
-    
+
     public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(this.get(i) + " ");
@@ -52,7 +54,7 @@ public class ArrayDeque<T> {
             size -= 1;
             return result;
         }
-
+        this.resize();
         return null;
     }
 
@@ -64,11 +66,11 @@ public class ArrayDeque<T> {
             size -= 1;
             return result;
         }
-
+        this.resize();
         return null;
     }
 
-    public void resize() {
+    private void resize() {
         int expandFactor = 3;
         int shrinkFactor = 2;
         if (size > item.length - 1) {
@@ -82,7 +84,7 @@ public class ArrayDeque<T> {
             nextLast = nextFirst + 1 + size;
         }
 
-        if (size < item.length / 4) {
+        if (size < item.length / 4 && item.length > 16) {
             int newsize  = size / shrinkFactor;
             T[] newitem = (T []) new Object[newsize];
             for (int i = 0; i < size; i++) {
