@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private T[] item;
     private int size;
     private static int expandFactor = 3;
-    private static int shrinkFactor = 2;
+    private static int shrinkFactor = 3;
     
 
     public ArrayDeque() {
@@ -112,8 +112,8 @@ public class ArrayDeque<T> {
     private void shrink() {
         int newsize  = item.length / shrinkFactor;
         T[] newitem = (T []) new Object[newsize];
-        for (int i = 1; i < size + 1; i++) {
-            newitem[i] = this.get(i);
+        for (int i = 0; i < size; i++) {
+            newitem[i + 1] = this.get(i);
         }
         this.item = newitem;
         nextfirstPos = item.length - 1;;
