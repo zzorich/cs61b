@@ -1,6 +1,6 @@
 public class ArrayDeque<T> {
-    private int firstPos;
-    private int lastPos;
+    private int nextfirstPos;
+    private int nextlastPos;
     private T[] item;
     private int size;
     private static int expandFactor = 3;
@@ -8,29 +8,47 @@ public class ArrayDeque<T> {
 
     public ArrayDeque() {
         item = (T []) new Object[8];
-        firstPos = 0;
-        lastPos = 0;
+        nextfirstPos = 0;
+        nextlastPos = 0;
         size = 0;
     }
 
+    /**
+     * @param x with 0 <= x < item.length.
+     * @return int y = (x - 1) modulos item.length with 0 <= y < item.length.
+     */
     private int minusOne(int x) {
-        return (x - 1) % item.length;
+        if (x - 1 < 0) {
+            return (x - 1) + item.length;
+        } else {
+            return x - 1;
+        }
     }
 
+    /**
+     * @param x with 0 <= x < item.length.
+     * @return int y = (x + 1) modulos item.length with 0 <= y < item.length.
+     */
     private int plusOne(int x) {
         return (x + 1) % item.length;
     }
 
     public void addFirst(T first) {
-        firstPos = minusOne(firstPos);
-        item[firstPos] = first;
+        if (isEmpty()) {
+            nextlastPos = plusOne(nextlastPos);
+        }
+        item[nextfirstPos] = first;
+        nextfirstPos = minusOne(nextfirstPos);
         size += 1;
         resize();
     }
 
     public void addLast(T last) {
-        lastPos = plusOne(lastPos);
-        item[lastPos] = last;
+        if (isEmpty()) {
+            nextfirstPos = minusOne(nextfirstPos);
+        }
+        item[nextlastPos] = last;
+        nextlastPos = plusOne(nextlastPos);
         size += 1;
         resize();
     }
@@ -43,9 +61,14 @@ public class ArrayDeque<T> {
         return size;
     }
 
+    /**
+     *
+     * @param index, 0 <= index < size - 1
+     * @return
+     */
     public T get(int index) {
-        if (index < size - 1) {
-            return item[(firstPos + index) % (item.length)];
+        if (index < size) {
+            return item[(nextfirstPos + 1 + index) % (item.length)];
         }
         return null;
     }
@@ -58,9 +81,10 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         if (size > 0) {
+            int firstPos = plusOne(nextfirstPos);
             T result = item[firstPos];
             item[firstPos] = null;
-            firstPos = plusOne(firstPos);
+            nextfirstPos = firstPos;
             size -= 1;
             resize();
             return result;
@@ -70,9 +94,10 @@ public class ArrayDeque<T> {
 
     public T removeLast() {
         if (size > 0) {
+            int lastPos = minusOne(nextlastPos);
             T result = item[lastPos];
             item[lastPos] = null;
-            lastPos = minusOne(lastPos);
+            nextlastPos = lastPos;
             size -= 1;
             resize();
             return result;
@@ -87,19 +112,19 @@ public class ArrayDeque<T> {
             newitem[i] = this.get(i);
         }
         this.item = newitem;
-        firstPos = 0;
-        lastPos = firstPos + size - 1;
+        nextfirstPos = minusOne(0);
+        nextlastPos =  size;
     }
 
-    public void expand() {
+    private void expand() {
         int newsize = item.length * expandFactor;
         T[] newitem = (T []) new Object[newsize];
         for (int i = 0; i < size; i++) {
             newitem[i] = this.get(i);
         }
         this.item = newitem;
-        firstPos = 0;
-        lastPos = firstPos + size - 1;
+        nextfirstPos = minusOne(0);
+        nextlastPos =  size;
     }
     private void resize() {
         if (size > item.length - 1) {
