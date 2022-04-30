@@ -1,28 +1,38 @@
 public class ArrayDeque<T> {
-    private int nextFirst;
-    private int nextLast;
+    private int firstPos;
+    private int lastPos;
     private T[] item;
     private int size;
+    private static int expandFactor = 3;
+    private static int shrinkFactor = 2;
 
     public ArrayDeque() {
         item = (T []) new Object[8];
-        nextFirst = 4;
-        nextLast = nextFirst;
+        firstPos = 0;
+        lastPos = 0;
         size = 0;
     }
 
-    public void addFirst(T first) {
-        this.item[nextFirst] = first;
-        nextFirst -= 1;
-        size += 1;
-        this.resize();
+    private int minusOne(int x) {
+        return (x - 1) % item.length;
     }
 
-    public void addLast(T first) {
-        this.item[nextLast] = first;
-        nextLast += 1;
+    private int plusOne(int x) {
+        return (x + 1) % item.length;
+    }
+
+    public void addFirst(T first) {
+        firstPos = minusOne(firstPos);
+        item[firstPos] = first;
         size += 1;
-        this.resize();
+        resize();
+    }
+
+    public void addLast(T last) {
+        lastPos = plusOne(lastPos);
+        item[lastPos] = last;
+        size += 1;
+        resize();
     }
 
     public boolean isEmpty() {
@@ -35,7 +45,7 @@ public class ArrayDeque<T> {
 
     public T get(int index) {
         if (index < size - 1) {
-            return item[(nextFirst + 1 + index) % (item.length)];
+            return item[(firstPos + index) % (item.length)];
         }
         return null;
     }
@@ -48,51 +58,56 @@ public class ArrayDeque<T> {
 
     public T removeFirst() {
         if (size > 0) {
-            nextFirst = (nextFirst + 1) % item.length;
-            T result = this.item[nextFirst];
-            this.item[nextFirst] = null;
+            T result = item[firstPos];
+            item[firstPos] = null;
+            firstPos = plusOne(firstPos);
             size -= 1;
+            resize();
             return result;
         }
-        this.resize();
         return null;
     }
 
     public T removeLast() {
         if (size > 0) {
-            nextLast = (nextLast - 1) % item.length;
-            T result = this.item[nextLast];
-            this.item[nextLast] = null;
+            T result = item[lastPos];
+            item[lastPos] = null;
+            lastPos = minusOne(lastPos);
             size -= 1;
+            resize();
             return result;
         }
-        this.resize();
         return null;
     }
 
+    private void shrink() {
+        int newsize  = item.length / shrinkFactor;
+        T[] newitem = (T []) new Object[newsize];
+        for (int i = 0; i < size; i++) {
+            newitem[i] = this.get(i);
+        }
+        this.item = newitem;
+        firstPos = 0;
+        lastPos = firstPos + size - 1;
+    }
+
+    public void expand() {
+        int newsize = item.length * expandFactor;
+        T[] newitem = (T []) new Object[newsize];
+        for (int i = 0; i < size; i++) {
+            newitem[i] = this.get(i);
+        }
+        this.item = newitem;
+        firstPos = 0;
+        lastPos = firstPos + size - 1;
+    }
     private void resize() {
-        int expandFactor = 3;
-        int shrinkFactor = 2;
         if (size > item.length - 1) {
-            int newsize  = size * expandFactor;
-            T[] newitem = (T []) new Object[newsize];
-            for (int i = 0; i < size; i++) {
-                newitem[i + newsize / 3] = this.get(i);
-            }
-            this.item = newitem;
-            nextFirst = newsize / 3 - 1;
-            nextLast = nextFirst + 1 + size;
+            expand();
         }
 
         if (size < item.length / 4 && item.length > 16) {
-            int newsize  = size / shrinkFactor;
-            T[] newitem = (T []) new Object[newsize];
-            for (int i = 0; i < size; i++) {
-                newitem[i + newsize / 3] = this.get(i);
-            }
-            this.item = newitem;
-            nextFirst = newsize / 3 - 1;
-            nextLast = nextFirst + 1 + size;
+            shrink();
         }
     }
 }

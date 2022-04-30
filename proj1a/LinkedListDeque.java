@@ -99,7 +99,7 @@ public class LinkedListDeque<T> {
                 ptr = ptr.next;
             }
             return ptr.item;
-        }else{
+        } else {
             return null;
         }
     }
