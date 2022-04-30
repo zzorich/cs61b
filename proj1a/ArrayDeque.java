@@ -1,42 +1,46 @@
 public class ArrayDeque<T> {
     private int nextfirstPos;
     private int nextlastPos;
+    private static int sentinelPos = 0;
     private T[] item;
     private int size;
     private static int expandFactor = 3;
     private static int shrinkFactor = 2;
+    
 
     public ArrayDeque() {
-        item = (T []) new Object[8];
-        nextfirstPos = 0;
-        nextlastPos = 0;
+        item = (T []) new Object[9];
+        item[sentinelPos] = null;
+        nextfirstPos = item.length - 1;
+        nextlastPos = 1;
         size = 0;
     }
 
     /**
-     * @param x with 0 <= x < item.length.
-     * @return int y = (x - 1) modulos item.length with 0 <= y < item.length.
+     * @param x current index, 1 <= x < item.length
+     * @return index move leftward, skipping the sentinel (0).
      */
     private int minusOne(int x) {
-        if (x - 1 < 0) {
-            return (x - 1) + item.length;
+        if (x == 1) {
+            return item.length;
         } else {
             return x - 1;
         }
     }
 
     /**
-     * @param x with 0 <= x < item.length.
-     * @return int y = (x + 1) modulos item.length with 0 <= y < item.length.
+     * @param x with 1 <= x < item.length.
+     * @return index move rightward, skipping the sentinel
      */
     private int plusOne(int x) {
-        return (x + 1) % item.length;
+        if (x == item.length) {
+            return 1;
+        } else {
+            return x + 1;
+        }
     }
 
     public void addFirst(T first) {
-        if (isEmpty()) {
-            nextlastPos = plusOne(nextlastPos);
-        }
         item[nextfirstPos] = first;
         nextfirstPos = minusOne(nextfirstPos);
         size += 1;
@@ -44,9 +48,6 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T last) {
-        if (isEmpty()) {
-            nextfirstPos = minusOne(nextfirstPos);
-        }
         item[nextlastPos] = last;
         nextlastPos = plusOne(nextlastPos);
         size += 1;
@@ -62,13 +63,16 @@ public class ArrayDeque<T> {
     }
 
     /**
-     *
-     * @param index, 0 <= index < size - 1
-     * @return
+     * @param index, return not null if 0 <= index < size - 1
+     * @return item at the actindex, where 1<= actindex <= item.length - 1, skipping the sentinel
      */
     public T get(int index) {
         if (index < size) {
-            return item[(nextfirstPos + 1 + index) % (item.length)];
+            int actindex = plusOne(nextfirstPos) + index;
+            if (actindex > item.length - 1) {
+                actindex = actindex % item.length + 1;
+            }
+            return item[actindex];
         }
         return null;
     }
@@ -108,26 +112,26 @@ public class ArrayDeque<T> {
     private void shrink() {
         int newsize  = item.length / shrinkFactor;
         T[] newitem = (T []) new Object[newsize];
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i < size + 1; i++) {
             newitem[i] = this.get(i);
         }
         this.item = newitem;
-        nextfirstPos = minusOne(0);
-        nextlastPos =  size;
+        nextfirstPos = item.length - 1;;
+        nextlastPos =  size + 1;
     }
 
     private void expand() {
         int newsize = item.length * expandFactor;
         T[] newitem = (T []) new Object[newsize];
         for (int i = 0; i < size; i++) {
-            newitem[i] = this.get(i);
+            newitem[i + 1] = this.get(i);
         }
         this.item = newitem;
-        nextfirstPos = minusOne(0);
-        nextlastPos =  size;
+        nextfirstPos = item.length - 1;
+        nextlastPos =  size + 1;
     }
     private void resize() {
-        if (size > item.length - 1) {
+        if (size > item.length - 2) {
             expand();
         }
 
