@@ -85,17 +85,10 @@ public class LinkedListDequeTest {
 		System.out.println("Running add/remove test.");
 
 		LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
-		boolean passed = lld1.get(0) == null;
-		passed = lld1.get(100) == null && passed;
 		lld1.addFirst(1);
-		passed = lld1.get(0) == 1 && passed;
 		lld1.addFirst(2);
-
-		passed = lld1.get(1) == 2 && passed;
-		passed = lld1.get(2) == null && passed;
-		lld1.addLast(3);
-		passed = lld1.get(2) == 3 && passed;
-
+		lld1.removeLast();
+		boolean passed =  lld1.get(0) == 2;
 		printTestStatus(passed);
 	}
 
@@ -109,7 +102,7 @@ public class LinkedListDequeTest {
 		lld1.addFirst(1);
 		passed = lld1.getRecursive(0) == 1 && passed;
 		lld1.addFirst(2);
-		passed = lld1.getRecursive(1) == 2 && passed;
+		passed = lld1.getRecursive(1) == 1 && passed;
 		passed = lld1.getRecursive(2) == null && passed;
 		lld1.addLast(3);
 		passed = lld1.getRecursive(2) == 3 && passed;

@@ -94,9 +94,10 @@ public class LinkedListDeque<T> {
 
     public T get(int index) {
         TNode ptr = sentinel.next;
-        if (index < size - 1) {
+        if (index < size) {
             while (index > 0) {
                 ptr = ptr.next;
+                index -= 1;
             }
             return ptr.item;
         } else {
