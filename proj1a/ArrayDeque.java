@@ -116,7 +116,7 @@ public class ArrayDeque<T> {
             newitem[i + 1] = this.get(i);
         }
         this.item = newitem;
-        nextfirstPos = item.length - 1;;
+        nextfirstPos = item.length - 1;
         nextlastPos =  size + 1;
     }
 
@@ -141,7 +141,7 @@ public class ArrayDeque<T> {
             expand();
         }
 
-        if (size < item.length / 4 && item.length > 16) {
+        if (size < (item.length - 1) / 4 && item.length > 16) {
             shrink();
         }
     }

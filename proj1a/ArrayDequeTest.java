@@ -70,6 +70,28 @@ public class ArrayDequeTest {
         passed = ad1.removeFirst() == 8 && passed;
         passed = ad1.removeLast() == 5  && passed;
 
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+        ad2.addLast(0);
+        ad2.addLast(1);
+        passed = ad2.removeFirst() == 0 && passed;
+        ad2.addLast(3);
+        ad2.addFirst(4);
+        passed = ad2.removeFirst() == 4 && passed;
+        ad2.addFirst(6);
+        ad2.addFirst(7);
+        ad2.addLast(8);
+        ad2.addLast(9);
+        passed = ad2.get(5) == 9 && passed;
+        ad2.addFirst(11);
+        ad2.addLast(12);
+        passed = ad2.removeFirst() == 11 && passed;
+        ad2.addFirst(14);
+        passed = ad2.removeLast() == 12 && passed;
+        passed = ad2.removeFirst() == 14 && passed;
+        passed = ad2.removeLast()  == 9 && passed;
+        ad2.addFirst(18);
+        passed = ad2.removeLast() == 8 && passed;
+
         if (passed) {
             System.out.println("Passed");
         } else {
