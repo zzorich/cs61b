@@ -30,7 +30,7 @@ public class ArrayDeque<T> {
 
     /**
      * @param x with 1 <= x < item.length - 1.
-     * @return index move rightward, skipping the sentinel
+     * @return index move rightward, skipping the sentinel.
      */
     private int plusOne(int x) {
         if (x == item.length - 1) {
@@ -110,33 +110,38 @@ public class ArrayDeque<T> {
     }
 
     private void shrink() {
-        int newsize  = item.length / shrinkFactor;
-        T[] newitem = (T []) new Object[newsize];
-        for (int i = 0; i < size; i++) {
-            newitem[i + 1] = this.get(i);
-        }
-        this.item = newitem;
+        this.item = copyArray(item.length / shrinkFactor);
         nextfirstPos = item.length - 1;
         nextlastPos =  size + 1;
     }
 
     private void expand() {
-        int newsize = item.length * expandFactor;
-        T[] newitem = (T []) new Object[newsize];
-        for (int i = 0; i < size; i++) {
-            newitem[i + 1] = this.get(i);
-        }
-        this.item = newitem;
+        this.item = copyArray(item.length * expandFactor);
         nextfirstPos = item.length - 1;
         nextlastPos =  size + 1;
     }
 
-     /* Resize or reset pointer of the empty deque*/
+    /**
+     * Copy the array item to a new array with approximate size.
+     * @param cap capacity of new array.
+     * @return copied array with optimised capacity.
+     */
+    private T[] copyArray(int cap) {
+        T[] newitem = (T []) new Object[cap];
+        for (int i = 0; i < size; i++) {
+            newitem[i + 1] = this.get(i);
+        }
+        newitem[0] = null;
+        return newitem;
+    }
+
+    /* Resize or reset pointer of the empty deque*/
     private void resize() {
-        if (size == 0) {
+        if (isEmpty()) {
             nextlastPos = 1;
             nextfirstPos = item.length - 1;
         }
+
         if (size > item.length - 2) {
             expand();
         }
