@@ -37,8 +37,24 @@ public class ArrayDequeTest {
         }
     }
 
+    public static void removeTest() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+        ad1.addFirst(1);
+        boolean passed = ad1.removeLast() == 1 && ad1.isEmpty();
+        for (int i = 0; i < 8; i++) {
+            ad1.addLast(i);
+        }
+        boolean
+
+        if (passed) {
+            System.out.println("Passed");
+        } else {
+            System.out.println("Failed");
+        }
+    }
     public static void main(String[] args) {
         addFirsttest();
         addLasttest();
+        removeTest();
     }
 }

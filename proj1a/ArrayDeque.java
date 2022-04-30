@@ -17,23 +17,23 @@ public class ArrayDeque<T> {
     }
 
     /**
-     * @param x current index, 1 <= x < item.length
+     * @param x current index, 1 <= x < item.length - 1
      * @return index move leftward, skipping the sentinel (0).
      */
     private int minusOne(int x) {
         if (x == 1) {
-            return item.length;
+            return item.length - 1;
         } else {
             return x - 1;
         }
     }
 
     /**
-     * @param x with 1 <= x < item.length.
+     * @param x with 1 <= x < item.length - 1.
      * @return index move rightward, skipping the sentinel
      */
     private int plusOne(int x) {
-        if (x == item.length) {
+        if (x == item.length - 1) {
             return 1;
         } else {
             return x + 1;
@@ -130,7 +130,13 @@ public class ArrayDeque<T> {
         nextfirstPos = item.length - 1;
         nextlastPos =  size + 1;
     }
+
+     /* Resize or reset pointer of the empty deque*/
     private void resize() {
+        if (size == 0) {
+            nextlastPos = 1;
+            nextfirstPos = item.length - 1;
+        }
         if (size > item.length - 2) {
             expand();
         }
