@@ -44,7 +44,6 @@ public class ArrayDequeTest {
         for (int i = 0; i < 8; i++) {
             ad1.addLast(i);
         }
-        boolean
 
         if (passed) {
             System.out.println("Passed");
