@@ -4,7 +4,7 @@ public class ArrayDeque<T> {
     private static int sentinelPos = 0;
     private T[] item;
     private int size;
-    private static int expandFactor = 3;
+    private static int expandFactor = 2;
     private static int shrinkFactor = 3;
     
 
