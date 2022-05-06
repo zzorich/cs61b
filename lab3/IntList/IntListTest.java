@@ -27,6 +27,25 @@ public class IntListTest {
         assertEquals(IntList.of(1, 4, 9), L);
     }
 
+    @Test(timeout = 1000)
+    public void testreverseList() {
+        // Marginal case
+        IntList empty = IntList.of();
+        assertEquals(IntList.reverse(empty), IntList.of());
+
+        // Normal case
+        IntList test1 = IntList.of(1, 2 , 3 ,4);
+        assertEquals(IntList.reverse(test1), IntList.of(4, 3, 2, 1));
+        IntList test2 = IntList.of(7, 8, 9);
+        assertEquals(IntList.reverse(test2), IntList.of(9, 8, 7));
+
+        // Test if it is muted
+        IntList muted = IntList.of(100, 99, 98);
+        IntList.reverse(muted);
+        assertNotEquals(IntList.of(100, 99, 98), muted);
+
+
+    }
     /**
      * Do not use the new keyword in your tests. You can create
      * lists using the handy IntList.of method.
