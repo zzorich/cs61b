@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T> {
     private int nextfirstPos;
     private int nextlastPos;
     private static int sentinelPos = 0;
