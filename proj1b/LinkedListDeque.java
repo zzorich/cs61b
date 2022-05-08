@@ -1,4 +1,4 @@
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
 
     private TNode sentinel;
     private int size;
@@ -29,6 +29,7 @@ public class LinkedListDeque<T> {
      * add an element to the head of list.
      * @param item of preconfigured type to be passed in.
      */
+    @Override
     public void addFirst(T item) {
         TNode firstNode = new TNode(item, sentinel, sentinel.next);
         sentinel.next.prev = firstNode;
@@ -40,6 +41,7 @@ public class LinkedListDeque<T> {
      * add an element to the tail of the list.
      * @param item, the value to be passed in.
      */
+    @Override
     public void addLast(T item) {
         TNode lastNode = new TNode(item, sentinel.prev, sentinel);
         sentinel.prev.next = lastNode;
@@ -51,10 +53,12 @@ public class LinkedListDeque<T> {
      * Check whether the linked list is empty.
      * @return true if it is empty, otherwise false.
      */
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
@@ -62,6 +66,7 @@ public class LinkedListDeque<T> {
     /**
      * Print out the Deque.
      */
+    @Override
     public void printDeque() {
         TNode ptr = sentinel.next;
         while (ptr != sentinel) {
@@ -70,6 +75,7 @@ public class LinkedListDeque<T> {
         }
     }
 
+    @Override
     public T removeLast() {
         T item = null;
         if (size > 0) {
@@ -81,6 +87,7 @@ public class LinkedListDeque<T> {
         return item;
     }
 
+    @Override
     public T removeFirst() {
         T item = null;
         if (size > 0) {
@@ -92,6 +99,7 @@ public class LinkedListDeque<T> {
         return item;
     }
 
+    @Override
     public T get(int index) {
         TNode ptr = sentinel.next;
         if (index < size) {

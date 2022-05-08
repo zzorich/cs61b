@@ -1,4 +1,4 @@
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
     private int nextfirstPos;
     private int nextlastPos;
     private static int sentinelPos = 0;
@@ -40,6 +40,7 @@ public class ArrayDeque<T> {
         }
     }
 
+    @Override
     public void addFirst(T first) {
         item[nextfirstPos] = first;
         nextfirstPos = minusOne(nextfirstPos);
@@ -47,6 +48,7 @@ public class ArrayDeque<T> {
         resize();
     }
 
+    @Override
     public void addLast(T last) {
         item[nextlastPos] = last;
         nextlastPos = plusOne(nextlastPos);
@@ -54,10 +56,12 @@ public class ArrayDeque<T> {
         resize();
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
@@ -66,6 +70,8 @@ public class ArrayDeque<T> {
      * @param index, return not null if 0 <= index < size - 1
      * @return item at the actindex, where 1<= actindex <= item.length - 1, skipping the sentinel
      */
+
+    @Override
     public T get(int index) {
         if (index < size) {
             int actindex = plusOne(nextfirstPos) + index;
@@ -77,12 +83,14 @@ public class ArrayDeque<T> {
         return null;
     }
 
+    @Override
     public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(this.get(i) + " ");
         }
     }
 
+    @Override
     public T removeFirst() {
         if (size > 0) {
             int firstPos = plusOne(nextfirstPos);
@@ -96,6 +104,7 @@ public class ArrayDeque<T> {
         return null;
     }
 
+    @Override
     public T removeLast() {
         if (size > 0) {
             int lastPos = minusOne(nextlastPos);
