@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 public class Palindrome {
 
     public Deque<Character> wordToDeque(String word) {
@@ -22,7 +24,7 @@ public class Palindrome {
 
     /* recursive version, short circuit*/
     public boolean isPalindrome(String word) {
-        Deque<Character> wordDeque = wordToDeque(word);
+        Deque<Character> wordDeque = wordToDeque(word.toLowerCase(Locale.ROOT));
         return isPalindrome(wordDeque);
     }
 
@@ -35,7 +37,7 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        Deque<Character> wordDeque = wordToDeque(word);
+        Deque<Character> wordDeque = wordToDeque(word.toLowerCase(Locale.ROOT));
         return isPalindrome(wordDeque, cc);
     }
 
