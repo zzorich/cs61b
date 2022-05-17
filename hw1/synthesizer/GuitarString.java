@@ -38,10 +38,6 @@ public class GuitarString {
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        if (buffer.isEmpty()) {
-            pluck();
-            tic();
-        }
         return buffer.peek();
     }
 }
