@@ -3,13 +3,13 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    int width;
-    int upperSite;
-    int lowSite;
-    int[] sites;
-    int sizeOfopensites = 0;
-    WeightedQuickUnionUF full;
-    WeightedQuickUnionUF perc;
+    private int width;
+    private int upperSite;
+    private int lowSite;
+    private int[] sites;
+    private int sizeOfopensites = 0;
+    private WeightedQuickUnionUF full;
+    private WeightedQuickUnionUF perc;
     public Percolation(int N) {
         if (N <= 0) {
             throw new java.lang.IllegalArgumentException();
@@ -26,11 +26,11 @@ public class Percolation {
         }
         sites = new int[N * N];
     }
-    private boolean inrange(int row, int col){
+    private boolean inrange(int row, int col) {
         return row >= 0 && row < width && col >= 0 && col < width;
     }
-    private int indexConvert(int row, int col){
-        if (!inrange(row, col)) throw new java.lang.IndexOutOfBoundsException();
+    private int indexConvert(int row, int col) {
+        if (!inrange(row, col)) {throw new java.lang.IndexOutOfBoundsException();}
         return row * width + col;
     }
 
@@ -72,5 +72,9 @@ public class Percolation {
 
     public boolean percolates() {
         return perc.connected(upperSite, lowSite);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
