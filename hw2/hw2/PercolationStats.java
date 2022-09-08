@@ -3,9 +3,9 @@ import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
-    PercolationFactory pf;
-    int width;
-    int tests;
+    PercolationFactory percf;
+    private int width;
+    private int tests;
     private double[] stats;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
@@ -14,13 +14,14 @@ public class PercolationStats {
         width = N;
         tests = T;
         stats = new double[T];
+        percf = pf;
         for(int counter = 0; counter < T; counter++) {
-            stats[counter] = simulation(pf);
+            stats[counter] = simulation();
         }
     }
 
-    private double simulation(PercolationFactory pf) {
-        Percolation perc = pf.make(width);
+    private double simulation() {
+        Percolation perc = percf.make(width);
         while (!perc.percolates()) {
             int row = StdRandom.uniform(width);
             int col = StdRandom.uniform(width);
@@ -28,7 +29,7 @@ public class PercolationStats {
                 perc.open(row, col);
             }
         }
-        return perc.numberOfOpenSites() / (width * width);
+        return (double) perc.numberOfOpenSites() / (width * width);
     }
 
     public double mean() {
@@ -45,4 +46,5 @@ public class PercolationStats {
     public double confidenceHigh() {
         return mean() + 1.96 * stddev() / Math.sqrt(tests);
     }
+
 }
