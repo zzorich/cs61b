@@ -11,7 +11,7 @@ public class Percolation {
     WeightedQuickUnionUF full;
     WeightedQuickUnionUF perc;
     public Percolation(int N) {
-        if (N < 0) {
+        if (N <= 0) {
             throw new java.lang.IllegalArgumentException();
         }
         width = N;
@@ -26,9 +26,11 @@ public class Percolation {
         }
         sites = new int[N * N];
     }
-
+    private boolean inrange(int row, int col){
+        return row >= 0 && row < width && col >= 0 && col < width;
+    }
     private int indexConvert(int row, int col){
-        if (row < 0 || row >= width || col < 0 || col >= width) throw new java.lang.IndexOutOfBoundsException();
+        if (!inrange(row, col)) throw new java.lang.IndexOutOfBoundsException();
         return row * width + col;
     }
 
@@ -39,17 +41,21 @@ public class Percolation {
         int index = indexConvert(row, col);
         sites[index] = 1;
         sizeOfopensites += 1;
-        if (isOpen(row - 1, col)) {
+        if (inrange(row - 1, col) && isOpen(row - 1, col)) {
             full.union(indexConvert(row - 1, col), index);
+            perc.union(indexConvert(row - 1, col), index);
         }
-        if (isOpen(row + 1, col)) {
+        if (inrange(row + 1, col) && isOpen(row + 1, col)) {
             full.union(indexConvert(row + 1, col), index);
+            perc.union(indexConvert(row + 1, col), index);
         }
-        if (isOpen(row, col + 1)) {
+        if (inrange(row, col) && isOpen(row, col + 1)) {
             full.union(indexConvert(row, col + 1), index);
+            perc.union(indexConvert(row, col + 1), index);
         }
-        if (isOpen(row, col - 1)) {
+        if (inrange(row, col - 1) && isOpen(row, col - 1)) {
             full.union(indexConvert(row, col - 1), index);
+            perc.union(indexConvert(row, col - 1), index);
         }
     }
 
