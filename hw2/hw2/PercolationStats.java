@@ -8,6 +8,9 @@ public class PercolationStats {
     int tests;
     private double[] stats;
     public PercolationStats(int N, int T, PercolationFactory pf) {
+        if (N <= 0 || T <= 0) {
+            throw new java.lang.IllegalArgumentException();
+        }
         width = N;
         tests = T;
         stats = new double[T];
@@ -21,7 +24,9 @@ public class PercolationStats {
         while (!perc.percolates()) {
             int row = StdRandom.uniform(width);
             int col = StdRandom.uniform(width);
-            perc.open(row, col);
+            if (!perc.isOpen(row, col)) {
+                perc.open(row, col);
+            }
         }
         return perc.numberOfOpenSites() / (width * width);
     }
