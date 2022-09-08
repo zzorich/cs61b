@@ -49,7 +49,7 @@ public class Percolation {
             full.union(indexConvert(row + 1, col), index);
             perc.union(indexConvert(row + 1, col), index);
         }
-        if (inrange(row, col) && isOpen(row, col + 1)) {
+        if (inrange(row, col + 1) && isOpen(row, col + 1)) {
             full.union(indexConvert(row, col + 1), index);
             perc.union(indexConvert(row, col + 1), index);
         }
@@ -64,13 +64,16 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        return full.connected(indexConvert(row, col), upperSite);
+        return isOpen(row, col) && full.connected(indexConvert(row, col), upperSite);
     }
     public int numberOfOpenSites() {
         return sizeOfopensites;
     }
 
     public boolean percolates() {
+        if (width == 1) {
+            return isOpen(0, 0);
+        }
         return perc.connected(upperSite, lowSite);
     }
 
