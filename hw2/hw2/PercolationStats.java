@@ -3,7 +3,7 @@ import edu.princeton.cs.introcs.StdRandom;
 import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
-    PercolationFactory percf;
+    private PercolationFactory percf;
     private int width;
     private int tests;
     private double[] stats;
@@ -15,7 +15,7 @@ public class PercolationStats {
         tests = T;
         stats = new double[T];
         percf = pf;
-        for(int counter = 0; counter < T; counter++) {
+        for (int counter = 0; counter < T; counter++) {
             stats[counter] = simulation();
         }
     }

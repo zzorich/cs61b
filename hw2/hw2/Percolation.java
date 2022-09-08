@@ -30,7 +30,9 @@ public class Percolation {
         return row >= 0 && row < width && col >= 0 && col < width;
     }
     private int indexConvert(int row, int col) {
-        if (!inrange(row, col)) {throw new java.lang.IndexOutOfBoundsException();}
+        if (!inrange(row, col)) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
         return row * width + col;
     }
 
