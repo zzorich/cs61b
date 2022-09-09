@@ -28,6 +28,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         this.clear();
     }
 
+    public MyHashMap(int capacity) {
+        buckets = new ArrayMap[capacity];
+        this.clear();
+    }
+
     /* Removes all of the mappings from this map. */
     @Override
     public void clear() {
@@ -52,12 +57,16 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
 
     private void resize(int capacity) {
-        MyHashMap<K, V> tempMap = this;
-        buckets = new ArrayMap[capacity];
-        clear();
-        for (K key: tempMap) {
-            this.put(key, tempMap.get(key));
+        ArrayMap<K, V>[] tempBukets = new ArrayMap[capacity];
+        for (int i = 0; i < capacity; i += 1) {
+            tempBukets[i] = new ArrayMap<>();
         }
+        for (K key: keySet) {
+            int index = Math.floorMod(key.hashCode(), tempBukets.length);
+            tempBukets[index].put(key, get(key));
+        }
+
+        buckets = tempBukets;
     }
 
     /* Returns the value to which the specified key is mapped, or null if this
