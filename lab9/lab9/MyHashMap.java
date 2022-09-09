@@ -51,6 +51,15 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return Math.floorMod(key.hashCode(), numBuckets);
     }
 
+    private void resize(int capacity) {
+        MyHashMap<K, V> tempMap = this;
+        buckets = new ArrayMap[capacity];
+        clear();
+        for (K key: tempMap) {
+            this.put(key, tempMap.get(key));
+        }
+    }
+
     /* Returns the value to which the specified key is mapped, or null if this
      * map contains no mapping for the key.
      */
@@ -67,6 +76,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
             keySet.add(key);
         }
         buckets[hash(key)].put(key, value);
+
+        if (loadFactor() > MAX_LF) {
+            resize(buckets.length * 2);
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
