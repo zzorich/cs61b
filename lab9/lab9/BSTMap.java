@@ -161,6 +161,9 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>, Iterabl
             rt.right = removeHelper(rt.right, key);
             return rt;
         }
+        if (rt.right == null) {
+            return rt.left;
+        }
         Node smallestNode = min(rt.right);
         smallestNode.right = removeMin(rt.right); //size has been reduced here, no further reduction is needed.
         smallestNode.left = rt.left;
