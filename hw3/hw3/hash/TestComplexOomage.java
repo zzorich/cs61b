@@ -38,10 +38,13 @@ public class TestComplexOomage {
     public void testWithDeadlyParams() {
         List<Oomage> deadlyList = new ArrayList<>();
 
-        int N = StdRandom.uniform(3, 10);
+        int N = 10;
         ArrayList<Integer> params = new ArrayList<>(N);
-        for (int i = 3; i < N; i += 1) {
+        for (int i = 0; i < N - 4; i += 1) {
             params.add(StdRandom.uniform(0, 255));
+        }
+        for (int i = 0; i < 4; i++) {
+            params.add(4);
         }
 
         deadlyList.add(new ComplexOomage(params));
