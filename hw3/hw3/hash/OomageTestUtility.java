@@ -1,7 +1,6 @@
 package hw3.hash;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class OomageTestUtility {
