@@ -24,6 +24,7 @@ public class Solver {
         public int compare(SearchNode o1, SearchNode o2) {
             int disto1;
             int disto2;
+            /*
             if (!estgdistances.containsKey(o1.current)) {
                 estgdistances.put(o1.current, o1.current.estimatedDistanceToGoal());
             }
@@ -33,11 +34,12 @@ public class Solver {
                 estgdistances.put(o2.current, o2.current.estimatedDistanceToGoal());
             }
             disto2 = estgdistances.get(o2.current) + o2.moves;
-        /*
-        disto1 = o1.moves + o1.current.estimatedDistanceToGoal();
-        disto2 = o2.moves + o2.current.estimatedDistanceToGoal();
 
-         */
+             */
+
+            disto1 = o1.moves + o1.current.estimatedDistanceToGoal();
+            disto2 = o2.moves + o2.current.estimatedDistanceToGoal();
+
             if (disto1 < disto2) return -1;
             if (disto1 > disto2) return +1;
             return 0;
@@ -71,11 +73,10 @@ public class Solver {
                  */
             }
             for (WorldState state: currNode.current.neighbors()) {
-                if ((currNode.previous != null && state.equals(currNode.previous.current))
-                        || visitedStates.contains(state)) {
-                    continue;
+                if ((currNode.previous == null || !state.equals(currNode.previous.current))
+                        && !visitedStates.contains(state)) {
+                    fringe.insert(new SearchNode(state, currNode.moves + 1, currNode.previous));
                 }
-                fringe.insert(new SearchNode(state, currNode.moves + 1, currNode.previous));
             }
         }
     }

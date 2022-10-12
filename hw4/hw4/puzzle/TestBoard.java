@@ -48,6 +48,5 @@ public class TestBoard {
             child = (Board) child;
             System.out.println(child);
         }
-
     }
 }

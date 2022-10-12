@@ -49,7 +49,7 @@ public class Board implements WorldState {
                 if (titles[i][j] != BLANK) {
                     int title = titles[i][j] - 1;
                     int xPos = title / size;
-                    int yPos = title - size * xPos;
+                    int yPos = title % size;
                     dist += Math.abs(xPos - i) + Math.abs(yPos - j);
                 }
             }
@@ -80,7 +80,7 @@ public class Board implements WorldState {
 
     @Override
     public int hashCode() {
-        return size + titles[0][0]; //trival hash for performance
+        return 0; //trival hash for performance
     }
 
     @Override
