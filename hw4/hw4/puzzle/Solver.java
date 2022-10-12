@@ -1,9 +1,7 @@
 package hw4.puzzle;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
+
 import edu.princeton.cs.algs4.MinPQ;
 
 public class Solver {
@@ -83,10 +81,10 @@ public class Solver {
         return finaNode.moves;
     }
     public Iterable<WorldState> solution() {
-        Stack<WorldState> results = new Stack<>();
+        Deque<WorldState> results = new ArrayDeque<>();
         SearchNode ptr = finaNode;
         while (ptr != null) {
-            results.push(ptr.current);
+            results.addFirst(ptr.current);
             ptr = ptr.previous;
         }
 
