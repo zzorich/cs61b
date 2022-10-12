@@ -44,8 +44,7 @@ public class Solver {
         }
     }
 
-    private int moves;
-    private Stack<WorldState> solution = new Stack<>();
+    private SearchNode finaNode;
     private MinPQ<SearchNode> fringe;
     private HashSet<WorldState> visitedStates = new HashSet<>();
 
@@ -64,16 +63,12 @@ public class Solver {
              */
 
             if (currNode.current.isGoal()) {
-                moves = currNode.moves;
-                while (currNode != null) {
-                    solution.push(currNode.current);
-                    currNode = currNode.previous;
-                }
+                finaNode = currNode;
+                return;
                 /*
                 System.out.println("Total moves is: " + moves);
 
                  */
-                break;
             }
             for (WorldState state: currNode.current.neighbors()) {
                 if ((currNode.previous != null && state.equals(currNode.previous.current))
@@ -85,9 +80,16 @@ public class Solver {
         }
     }
     public int moves() {
-        return moves;
+        return finaNode.moves;
     }
     public Iterable<WorldState> solution() {
-        return solution;
+        Stack<WorldState> results = new Stack<>();
+        SearchNode ptr = finaNode;
+        while (ptr != null) {
+            results.push(ptr.current);
+            ptr = ptr.previous;
+        }
+
+        return results;
     }
 }
