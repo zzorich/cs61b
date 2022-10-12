@@ -24,4 +24,30 @@ public class TestBoard {
         x[1][1] = 1000;
         assertEquals("Your Board class is mutable and you should be making a copy of the values in the passed tiles array. Please see the FAQ!", 3, b.tileAt(1, 1));
     }
-} 
+
+    @Test
+    public void distances() {
+        int[][] tiles = new int[3][3];
+        int count = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                tiles[i][j] = count;
+                count++;
+            }
+        }
+        tiles[2][2] = 0;
+        Board board = new Board(tiles);
+        assertTrue(board.isGoal());
+    }
+
+    @Test
+    public void testNeighbour() {
+        int[][] tiles = {{5, 2, 1}, {4, 8, 3}, {7, 0, 6}};
+        Board board = new Board(tiles);
+        for (WorldState child: board.neighbors()) {
+            child = (Board) child;
+            System.out.println(child);
+        }
+
+    }
+}
