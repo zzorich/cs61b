@@ -37,6 +37,7 @@ public class TestBoard {
         }
         tiles[2][2] = 0;
         Board board = new Board(tiles);
+        Iterable T = new Solver(board).solution();
         assertTrue(board.isGoal());
     }
 

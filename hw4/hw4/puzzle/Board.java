@@ -80,7 +80,7 @@ public class Board implements WorldState {
 
     @Override
     public int hashCode() {
-        return 0; //trival hash for performance
+        return tileAt(0, 0) + tileAt(1, 0); //trival hash for performance
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Solver {
         }
     }
     public class WSComparator implements Comparator<SearchNode> {
-        private HashMap<WorldState, Integer> estgdistances = new HashMap<>();
+        // private HashMap<WorldState, Integer> estgdistances = new HashMap<>();
         @Override
         public int compare(SearchNode o1, SearchNode o2) {
             int disto1;
@@ -35,15 +35,14 @@ public class Solver {
             }
             disto2 = estgdistances.get(o2.current) + o2.moves;
 
+
              */
 
             disto1 = o1.moves + o1.current.estimatedDistanceToGoal();
             disto2 = o2.moves + o2.current.estimatedDistanceToGoal();
 
-            if (disto1 < disto2) return -1;
-            if (disto1 > disto2) return +1;
-            return 0;
-        }
+            return disto1 - disto2;
+       }
     }
 
     private SearchNode finaNode;
@@ -73,9 +72,9 @@ public class Solver {
                  */
             }
             for (WorldState state: currNode.current.neighbors()) {
-                if ((currNode.previous == null || !state.equals(currNode.previous.current))
+                if (currNode.previous == null || !state.equals(currNode.previous.current)
                         && !visitedStates.contains(state)) {
-                    fringe.insert(new SearchNode(state, currNode.moves + 1, currNode.previous));
+                    fringe.insert(new SearchNode(state, currNode.moves + 1, currNode));
                 }
             }
         }
