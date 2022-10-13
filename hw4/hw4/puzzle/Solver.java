@@ -1,7 +1,6 @@
 package hw4.puzzle;
 
 import java.util.*;
-
 import edu.princeton.cs.algs4.MinPQ;
 
 public class Solver {
