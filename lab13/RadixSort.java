@@ -20,33 +20,33 @@ public class RadixSort {
         if (asciis.length == 0) {
             return asciis;
         }
-        int length = asciis[0].length();
-        if (length <= 0) {
-            return asciis;
+        int max = -1;
+        for (String string: asciis) {
+            max = Math.max(string.length(), max);
         }
-        for (int j = length - 1; j >= 0; j--) {
-            asciis = stableSort(asciis, j);
+        for (int j = max - 1; j >= 0; j--) {
+            asciis = stableSort(asciis, j, max);
         }
 
         return asciis;
     }
-    private static String[] stableSort(String[] asciis, int index) {
-        int[] counts = new int[256];
+    private static String[] stableSort(String[] asciis, int index, int max) {
+        int[] counts = new int[257];
         for (String string: asciis) {
-            int val = (int) string.charAt(index);
+            int val = charAt(string, index, max);
             counts[val] += 1;
         }
 
         int pos = 0;
-        int[] start = new int[256];
-        for (int i = 0; i < 256; i++) {
+        int[] start = new int[257];
+        for (int i = 0; i < 257; i++) {
             start[i] = pos;
             pos += counts[i];
         }
 
         String[] sorted = new String[asciis.length];
         for (String string: asciis) {
-            int val = (int) string.charAt(index);
+            int val = charAt(string, index, max);
             sorted[start[val]] = string;
             start[val] += 1;
         }
@@ -54,6 +54,15 @@ public class RadixSort {
         return sorted;
     }
 
+    private static int charAt(String string, int index, int max) {
+        if (string.length() == max) {
+            return string.charAt(index) + 1;
+        } else if (index < max - string.length() - 1) {
+            return 0;
+        } else {
+            return string.charAt(index - (max - string.length())) + 1;
+        }
+    }
     /**
      * LSD helper method that performs a destructive counting sort the array of
      * Strings based off characters at a specific index.
