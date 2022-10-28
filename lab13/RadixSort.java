@@ -57,7 +57,7 @@ public class RadixSort {
     private static int charAt(String string, int index, int max) {
         if (string.length() == max) {
             return string.charAt(index) + 1;
-        } else if (index < max - string.length() - 1) {
+        } else if (index < max - string.length()) {
             return 0;
         } else {
             return string.charAt(index - (max - string.length())) + 1;
