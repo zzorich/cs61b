@@ -33,7 +33,7 @@ public class RadixSort {
     private static String[] stableSort(String[] asciis, int index, int max) {
         int[] counts = new int[257];
         for (String string: asciis) {
-            int val = charAt(string, index, max);
+            int val = charAt(string, index);
             counts[val] += 1;
         }
 
@@ -46,7 +46,7 @@ public class RadixSort {
 
         String[] sorted = new String[asciis.length];
         for (String string: asciis) {
-            int val = charAt(string, index, max);
+            int val = charAt(string, index);
             sorted[start[val]] = string;
             start[val] += 1;
         }
@@ -54,13 +54,11 @@ public class RadixSort {
         return sorted;
     }
 
-    private static int charAt(String string, int index, int max) {
-        if (string.length() == max) {
+    private static int charAt(String string, int index) {
+        if (index < string.length()) {
             return string.charAt(index) + 1;
-        } else if (index < max - string.length()) {
-            return 0;
         } else {
-            return string.charAt(index - (max - string.length())) + 1;
+            return 0;
         }
     }
     /**
