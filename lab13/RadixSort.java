@@ -44,7 +44,7 @@ public class RadixSort {
             pos += counts[i];
         }
 
-        String[] sorted = new String[256];
+        String[] sorted = new String[asciis.length];
         for (String string: asciis) {
             int val = (int) string.charAt(index);
             sorted[start[val]] = string;
