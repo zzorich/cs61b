@@ -17,7 +17,41 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
-        return null;
+        if (asciis.length == 0) {
+            return asciis;
+        }
+        int length = asciis[0].length();
+        if (length <= 0) {
+            return asciis;
+        }
+        for (int j = length - 1; j >= 0; j--) {
+            asciis = stableSort(asciis, j);
+        }
+
+        return asciis;
+    }
+    private static String[] stableSort(String[] asciis, int index) {
+        int[] counts = new int[256];
+        for (String string: asciis) {
+            int val = (int) string.charAt(index);
+            counts[val] += 1;
+        }
+
+        int pos = 0;
+        int[] start = new int[256];
+        for (int i = 0; i < 256; i++) {
+            start[i] = pos;
+            pos += counts[i];
+        }
+
+        String[] sorted = new String[256];
+        for (String string: asciis) {
+            int val = (int) string.charAt(index);
+            sorted[start[val]] = string;
+            start[val] += 1;
+        }
+
+        return sorted;
     }
 
     /**
